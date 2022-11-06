@@ -1,0 +1,53 @@
+package com.epam.esm.impl;
+
+import com.epam.esm.AbstractDao;
+import com.epam.esm.Tag;
+import com.epam.esm.TagDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Repository
+@Transactional
+public class TagDaoImpl extends AbstractDao<Tag, Long> implements TagDao {
+
+    public static final String POPULAR =
+            "SELECT t " +
+                    "FROM Order o " +
+                    "INNER JOIN o.gifts g " +
+                    "INNER JOIN g.tags t " +
+                    "WHERE o.userId IN (SELECT o.userId FROM Order o GROUP BY o.userId ORDER BY SUM(o.price) DESC)" +
+                    "GROUP BY t.id " +
+                    "ORDER BY COUNT(t.id) DESC";
+    public static final String POPULAR_COUNT =
+            "SELECT COUNT(t) " +
+                    "FROM Order o " +
+                    "INNER JOIN o.gifts g " +
+                    "INNER JOIN g.tags t " +
+                    "WHERE o.userId IN (SELECT o.userId FROM Order o GROUP BY o.userId ORDER BY SUM(o.price) DESC)" +
+                    "GROUP BY t.id " +
+                    "ORDER BY COUNT(t.id) DESC";
+
+
+    @Autowired
+    public TagDaoImpl() {
+        super(Tag.class);
+    }
+
+    @Override
+    public Page<Tag> findTheMostPopularTagsOfUsesOrders(Pageable pageable) {
+        List<Tag> list = entityManager.createQuery(POPULAR, Tag.class)
+                .setFirstResult((int) pageable.getOffset())
+                .setMaxResults(pageable.getPageSize())
+                .getResultList();
+        Long count = (Long) entityManager.createQuery(POPULAR_COUNT)
+                .setMaxResults(1)
+                .getSingleResult();
+        return new PageImpl<>(list, pageable, count);
+    }
+}
