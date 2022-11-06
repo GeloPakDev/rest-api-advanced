@@ -1,7 +1,7 @@
 package com.epam.esm;
 
 import lombok.*;
-import org.hibernate.envers.Audited;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -13,11 +13,11 @@ import static com.epam.esm.ColumnName.*;
 
 @Entity
 @Table(name = GIFT_TABLE_NAME)
-@Audited
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class GiftCertificate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
