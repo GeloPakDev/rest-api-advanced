@@ -17,9 +17,9 @@ public class OrderHateoasAdder implements HateoasAdder<OrderDto> {
     @Override
     public void addLinks(OrderDto orderDto) {
         orderDto.add(linkTo(methodOn(CONTROLLER_CLASS).findAllOrders(DEFAULT_MIN_PAGE, DEFAULT_MIN_SIZE)).withSelfRel());
-        orderDto.add(linkTo(methodOn(CONTROLLER_CLASS).findOrderById(orderDto.getId())).withRel("findById"));
-        orderDto.add(linkTo(methodOn(CONTROLLER_CLASS).findAllUserOrders(orderDto.getUserId(), DEFAULT_MIN_PAGE, DEFAULT_MIN_SIZE)).withRel("userOrders"));
-        orderDto.add(linkTo(methodOn(CONTROLLER_CLASS).findUserOrderById(orderDto.getUserId(), orderDto.getId())).withRel("userOrderById"));
-        orderDto.add(linkTo(methodOn(CONTROLLER_CLASS).createGiftCertificate(orderDto.getUserId(), orderDto)).withRel("create"));
+        orderDto.add(linkTo(methodOn(CONTROLLER_CLASS).findOrderById(orderDto.getId())).withRel(FIND_BY_ID));
+        orderDto.add(linkTo(methodOn(CONTROLLER_CLASS).findAllUserOrders(orderDto.getUserId(), DEFAULT_MIN_PAGE, DEFAULT_MIN_SIZE)).withRel(USER_ORDERS));
+        orderDto.add(linkTo(methodOn(CONTROLLER_CLASS).findUserOrderById(orderDto.getUserId(), orderDto.getId())).withRel(USER_ORDER_BY_ID));
+        orderDto.add(linkTo(methodOn(CONTROLLER_CLASS).createGiftCertificate(orderDto.getUserId(), orderDto)).withRel(CREATE));
     }
 }

@@ -108,7 +108,6 @@ public class GiftCertificateServiceTest {
         when(giftCertificateDao.update(GIFT_CERTIFICATE_3)).thenReturn(GIFT_CERTIFICATE_3);
 
         GiftCertificate actual = giftCertificateService.update(GIFT_CERTIFICATE_3.getId(), GIFT_CERTIFICATE_3);
-        System.out.println(actual);
         assertEquals(GIFT_CERTIFICATE_3, actual);
     }
 }

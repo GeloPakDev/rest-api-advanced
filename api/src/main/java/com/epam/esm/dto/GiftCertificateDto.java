@@ -1,6 +1,5 @@
 package com.epam.esm.dto;
 
-
 import com.epam.esm.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Data;

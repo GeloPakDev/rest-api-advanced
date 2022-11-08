@@ -5,12 +5,10 @@ import com.epam.esm.User;
 import com.epam.esm.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Repository
-@Transactional
 public class UserDaoImpl extends AbstractDao<User, Long> implements UserDao {
 
     @Autowired

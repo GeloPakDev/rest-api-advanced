@@ -16,8 +16,8 @@ import static com.epam.esm.creator.util.FilterParameters.*;
 
 public abstract class AbstractQueryCreator<T> implements QueryCreator<T> {
     private final String PERCENT = "%";
-    private final String DESCRIPTION = "description";
-    private final String CREATE_DATE = "createDate";
+    private static final String DESCRIPTION = "description";
+    private static final String CREATE_DATE = "createDate";
 
     protected List<Predicate> addName(MultiValueMap<String, String> fields, CriteriaBuilder criteriaBuilder, Root<T> root) {
         List<Predicate> restrictions = new ArrayList<>();

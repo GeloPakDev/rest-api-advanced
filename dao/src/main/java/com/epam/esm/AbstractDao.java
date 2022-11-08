@@ -1,6 +1,5 @@
 package com.epam.esm;
 
-import com.epam.esm.creator.QueryCreator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

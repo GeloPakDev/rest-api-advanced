@@ -4,14 +4,13 @@ import com.epam.esm.GiftCertificate;
 import com.epam.esm.Tag;
 import com.epam.esm.exception.ExceptionResult;
 import lombok.experimental.UtilityClass;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.Set;
 
 import static com.epam.esm.exception.ExceptionIncorrectParameterMessageCodes.*;
 
 @UtilityClass
-public class GiftValidator {
+public class GiftValidator extends EntityValidator {
     private final int MAX_LENGTH_NAME = 45;
     private final int MIN_LENGTH_NAME = 3;
     private final int MAX_LENGTH_DESCRIPTION = 300;
@@ -23,7 +22,7 @@ public class GiftValidator {
         validateDescription(giftCertificate.getDescription(), er);
         validatePrice(giftCertificate.getPrice(), er);
         validateDuration(giftCertificate.getDuration(), er);
-        validateListOfTags(giftCertificate.getTags(), er);
+        validateSetOfTags(giftCertificate.getTags(), er);
     }
 
     public void validateForUpdate(GiftCertificate gift, ExceptionResult er) {
@@ -49,13 +48,13 @@ public class GiftValidator {
     }
 
     private void validateName(String name, ExceptionResult er) {
-        if (name == null || name.length() < MIN_LENGTH_NAME || name.length() > MAX_LENGTH_NAME || StringUtils.isNumeric(name)) {
+        if (name == null || name.length() < MIN_LENGTH_NAME || name.length() > MAX_LENGTH_NAME || isNotString(name)) {
             er.addException(BAD_GIFT_CERTIFICATE_NAME, name);
         }
     }
 
     private void validateDescription(String description, ExceptionResult er) {
-        if (description == null || description.length() > MAX_LENGTH_DESCRIPTION || StringUtils.isNumeric(description)) {
+        if (description == null || description.length() > MAX_LENGTH_DESCRIPTION || isNotString(description)) {
             er.addException(BAD_GIFT_CERTIFICATE_DESCRIPTION, description);
         }
     }
@@ -72,7 +71,7 @@ public class GiftValidator {
         }
     }
 
-    public void validateListOfTags(Set<Tag> tags, ExceptionResult er) {
+    public void validateSetOfTags(Set<Tag> tags, ExceptionResult er) {
         if (tags == null) return;
         for (Tag tag : tags) {
             TagValidator.validate(tag, er);

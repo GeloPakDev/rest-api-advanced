@@ -19,9 +19,9 @@ public class GiftHateoasAdder implements HateoasAdder<GiftCertificateDto> {
     @Override
     public void addLinks(GiftCertificateDto giftCertificateDto) {
         giftCertificateDto.add(linkTo(methodOn(CONTROLLER_CLASS).findAllGiftCertificates(DEFAULT_MIN_PAGE, DEFAULT_MIN_SIZE)).withSelfRel());
-        giftCertificateDto.add(linkTo(methodOn(CONTROLLER_CLASS).createGiftCertificate(converter.convertToEntity(giftCertificateDto))).withRel("create"));
-        giftCertificateDto.add(linkTo(methodOn(CONTROLLER_CLASS).deleteGiftCertificate(giftCertificateDto.getId())).withRel("delete"));
-        giftCertificateDto.add(linkTo(methodOn(CONTROLLER_CLASS).findGiftById(giftCertificateDto.getId())).withRel("findById"));
-        giftCertificateDto.add(linkTo(methodOn(CONTROLLER_CLASS).updateGiftCertificate(giftCertificateDto.getId(), converter.convertToEntity(giftCertificateDto))).withRel("update"));
+        giftCertificateDto.add(linkTo(methodOn(CONTROLLER_CLASS).createGiftCertificate(converter.convertToEntity(giftCertificateDto))).withRel(CREATE));
+        giftCertificateDto.add(linkTo(methodOn(CONTROLLER_CLASS).deleteGiftCertificate(giftCertificateDto.getId())).withRel(DELETE));
+        giftCertificateDto.add(linkTo(methodOn(CONTROLLER_CLASS).findGiftById(giftCertificateDto.getId())).withRel(FIND_BY_ID));
+        giftCertificateDto.add(linkTo(methodOn(CONTROLLER_CLASS).updateGiftCertificate(giftCertificateDto.getId(), converter.convertToEntity(giftCertificateDto))).withRel(UPDATE));
     }
 }

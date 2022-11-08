@@ -18,10 +18,10 @@ public class TagHateoasAdder implements HateoasAdder<TagDto> {
     @Override
     public void addLinks(TagDto tagDto) {
         tagDto.add(linkTo(methodOn(CONTROLLER_CLASS).findAllTags(DEFAULT_MIN_PAGE, DEFAULT_MIN_SIZE)).withSelfRel());
-        tagDto.add(linkTo(methodOn(CONTROLLER_CLASS).createTag(converter.convertToEntity(tagDto))).withRel("create"));
-        tagDto.add(linkTo(methodOn(CONTROLLER_CLASS).findTheMostPopularTagsOfUsesOrders(DEFAULT_MIN_PAGE, DEFAULT_MIN_SIZE)).withRel("popular"));
-        tagDto.add(linkTo(methodOn(CONTROLLER_CLASS).deleteTag(tagDto.getId())).withRel("delete"));
-        tagDto.add(linkTo(methodOn(CONTROLLER_CLASS).findTagById(tagDto.getId())).withRel("findById"));
-        tagDto.add(linkTo(methodOn(CONTROLLER_CLASS).findByTagName(tagDto.getName())).withRel("findByName"));
+        tagDto.add(linkTo(methodOn(CONTROLLER_CLASS).createTag(converter.convertToEntity(tagDto))).withRel(CREATE));
+        tagDto.add(linkTo(methodOn(CONTROLLER_CLASS).findTheMostPopularTagsOfUsesOrders(DEFAULT_MIN_PAGE, DEFAULT_MIN_SIZE)).withRel(POPULAR));
+        tagDto.add(linkTo(methodOn(CONTROLLER_CLASS).deleteTag(tagDto.getId())).withRel(DELETE));
+        tagDto.add(linkTo(methodOn(CONTROLLER_CLASS).findTagById(tagDto.getId())).withRel(FIND_BY_ID));
+        tagDto.add(linkTo(methodOn(CONTROLLER_CLASS).findByTagName(tagDto.getName())).withRel(FIND_BY_NAME));
     }
 }
