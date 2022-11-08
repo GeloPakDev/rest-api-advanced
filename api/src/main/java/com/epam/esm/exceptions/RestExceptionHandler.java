@@ -74,6 +74,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .status(BAD_REQUEST)
                 .statusCode(statusCode)
+                .message(details.toString())
                 .build();
         return buildResponseEntity(errorResponse);
     }
