@@ -7,7 +7,7 @@ import lombok.experimental.UtilityClass;
 import static com.epam.esm.exception.ExceptionIncorrectParameterMessageCodes.BAD_TAG_NAME;
 
 @UtilityClass
-public class TagValidator {
+public class TagValidator extends EntityValidator {
     private final int MAX_LENGTH_NAME = 20;
     private final int MIN_LENGTH_NAME = 3;
 
@@ -17,7 +17,7 @@ public class TagValidator {
     }
 
     public void validateName(String name, ExceptionResult er) {
-        if (name == null || name.length() < MIN_LENGTH_NAME || name.length() > MAX_LENGTH_NAME) {
+        if (name == null || name.length() < MIN_LENGTH_NAME || name.length() > MAX_LENGTH_NAME || isNotString(name)) {
             er.addException(BAD_TAG_NAME, name);
         }
     }
