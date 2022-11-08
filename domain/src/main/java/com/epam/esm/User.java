@@ -29,7 +29,7 @@ public class User {
     @Column(name = USER_NAME)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     @JoinColumn(name = ORDER_USER_ID)
     Set<Order> orders;
 }
