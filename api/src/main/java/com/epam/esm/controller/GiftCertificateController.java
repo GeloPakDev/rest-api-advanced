@@ -1,6 +1,7 @@
 package com.epam.esm.controller;
 
 import com.epam.esm.GiftCertificate;
+import com.epam.esm.config.CORSConfig;
 import com.epam.esm.dto.GiftCertificateDto;
 import com.epam.esm.dto.converter.DtoConverter;
 import com.epam.esm.hateoas.HateoasAdder;
@@ -22,9 +23,20 @@ import java.util.Optional;
 import static com.epam.esm.util.EndpointName.*;
 import static com.epam.esm.util.QueryParam.*;
 
+/**
+ * Class {@code GiftCertificateController} is an endpoint of the API
+ * which allows to perform CRUD operations on Gift Certificates with support of Filtering and Pagination
+ * <p>
+ * Annotated by {@link RestController} with no parameters to provide an answer in application/json.
+ * Annotated by {@link RequestMapping} with parameter value = "/api".
+ * So that {@code GiftCertificateController} is accessed by sending request to /api/certificates.
+ *
+ * @author Oleg Pak
+ * @since 1.0
+ */
 @RestController
 @RequestMapping(path = BASE_URL, produces = JSON)
-@CrossOrigin(origins = LOCALHOST)
+@CrossOrigin(origins = CORSConfig.LOCALHOST)
 public class GiftCertificateController {
 
     private final GiftCertificateService giftCertificateService;
@@ -44,6 +56,13 @@ public class GiftCertificateController {
     }
 
     //GET mappings
+
+    /**
+     * Method for fetching GiftCertificate by ID.
+     *
+     * @param id ID of GiftCertificate
+     * @return Found GiftCertificate entity by ID with related action links supported by HATEOAS
+     */
     @RequestMapping(value = GIFT_CERTIFICATES, params = REQUEST_ID, method = RequestMethod.GET)
     public ResponseEntity<Object> findGiftById(@RequestParam Long id) {
         //Retrieve GiftCertificate from the DB
@@ -61,22 +80,44 @@ public class GiftCertificateController {
         }
     }
 
+    /**
+     * Method for fetching all GiftCertificate entities accessible in application
+     *
+     * @param page the number of page for pagination
+     * @param size the size of page for pagination
+     * @return Found all GiftCertificate entities in the application with HATEOAS pagination support
+     */
     @RequestMapping(GIFT_CERTIFICATES)
     public PagedModel<GiftCertificateDto> findAllGiftCertificates(@RequestParam(value = PAGE, defaultValue = "0", required = false) int page,
-                                                              @RequestParam(value = SIZE, defaultValue = "5", required = false) int size) {
+                                                                  @RequestParam(value = SIZE, defaultValue = "5", required = false) int size) {
         Page<GiftCertificate> giftPage = giftCertificateService.findAll(page, size);
         return pagedResourcesAssembler.toModel(giftPage, giftModelAssembler);
     }
 
+    /**
+     * Method for fetching all GiftCertificate accessible by applying various filters
+     *
+     * @param page             the number of page for pagination
+     * @param size             the size of page for pagination
+     * @param allRequestParams request parameters, which contain filters to be applied for search
+     * @return Found all GiftCertificate entities with applied filters in the application with HATEOAS pagination support
+     */
     @RequestMapping(GIFT_CERTIFICATES + FILTER)
     public PagedModel<GiftCertificateDto> findGiftCertificatesByParameter(@RequestParam MultiValueMap<String, String> allRequestParams,
-                                                                      @RequestParam(value = PAGE, defaultValue = "0", required = false) int page,
-                                                                      @RequestParam(value = SIZE, defaultValue = "5", required = false) int size) {
+                                                                          @RequestParam(value = PAGE, defaultValue = "0", required = false) int page,
+                                                                          @RequestParam(value = SIZE, defaultValue = "5", required = false) int size) {
         Page<GiftCertificate> giftPage = giftCertificateService.doFilter(allRequestParams, page, size);
         return pagedResourcesAssembler.toModel(giftPage, giftModelAssembler);
     }
 
     //POST Mappings
+
+    /**
+     * Method for creating GiftCertificate
+     *
+     * @param giftCertificate GiftCertificate to create
+     * @return Created GiftCertificate with related action links supported by HATEOAS
+     */
     @PostMapping(value = GIFT_CERTIFICATES, consumes = JSON)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Object> createGiftCertificate(@RequestBody GiftCertificate giftCertificate) {
@@ -87,6 +128,14 @@ public class GiftCertificateController {
     }
 
     //UPDATE Mappings
+
+    /**
+     * Method for creating GiftCertificate
+     *
+     * @param id              ID of the GiftCertificate to update
+     * @param giftCertificate GiftCertificate object which contains fields to update
+     * @return Updated GiftCertificate with related action links supported by HATEOAS
+     */
     @PatchMapping(path = GIFT_CERTIFICATES + ID, consumes = JSON)
     public ResponseEntity<Object> updateGiftCertificate(@PathVariable(REQUEST_ID) Long id, @RequestBody GiftCertificate giftCertificate) {
         GiftCertificate gift = giftCertificateService.update(id, giftCertificate);
@@ -96,6 +145,13 @@ public class GiftCertificateController {
     }
 
     //DELETE Mappings
+
+    /**
+     * Method for deleting GiftCertificate
+     *
+     * @param id ID of GiftCertificate to delete
+     * @return Deleted GiftCertificate with related action links supported by HATEOAS
+     */
     @RequestMapping(value = GIFT_CERTIFICATES, params = REQUEST_ID, method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Object> deleteGiftCertificate(@RequestParam Long id) {

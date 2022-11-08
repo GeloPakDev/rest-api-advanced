@@ -1,6 +1,7 @@
 package com.epam.esm.controller;
 
 import com.epam.esm.Tag;
+import com.epam.esm.config.CORSConfig;
 import com.epam.esm.dto.TagDto;
 import com.epam.esm.dto.converter.DtoConverter;
 import com.epam.esm.hateoas.HateoasAdder;
@@ -21,9 +22,20 @@ import java.util.Optional;
 import static com.epam.esm.util.EndpointName.*;
 import static com.epam.esm.util.QueryParam.*;
 
+/**
+ * Class {@code TagController} is an endpoint of the API
+ * which allows to perform CRD operations on Order with support of Filtering and Pagination
+ * <p>
+ * Annotated by {@link RestController} with no parameters to provide an answer in application/json.
+ * Annotated by {@link RequestMapping} with parameter value = "/api/tags".
+ * So that {@code TagController} is accessed by sending request to /api/tags.
+ *
+ * @author Oleg Pak
+ * @since 1.0
+ */
 @RestController
 @RequestMapping(path = BASE_URL + TAGS, produces = JSON)
-@CrossOrigin(origins = LOCALHOST)
+@CrossOrigin(origins =  CORSConfig.LOCALHOST)
 public class TagController {
 
     private final TagService tagService;
@@ -42,6 +54,13 @@ public class TagController {
     }
 
     //GET mappings
+
+    /**
+     * Method for fetching Tag by ID.
+     *
+     * @param id ID of Tag
+     * @return Found Tag entity by ID with related action links supported by HATEOAS
+     */
     @RequestMapping(params = REQUEST_ID)
     public ResponseEntity<Object> findTagById(@RequestParam Long id) {
         //Retrieve Tag from the DB
@@ -59,6 +78,12 @@ public class TagController {
         }
     }
 
+    /**
+     * Method for fetching Tag by Name.
+     *
+     * @param tagName Name of Tag
+     * @return Found Tag entity by Name with related action links supported by HATEOAS
+     */
     @RequestMapping(params = TAG_NAME)
     public ResponseEntity<Object> findByTagName(@RequestParam String tagName) {
         //Retrieve Tag from the DB
@@ -76,6 +101,13 @@ public class TagController {
         }
     }
 
+    /**
+     * Method for fetching all Tag entities accessible in application
+     *
+     * @param page the number of page for pagination
+     * @param size the size of page for pagination
+     * @return Found all Tag entities in the application with HATEOAS pagination support
+     */
     @GetMapping
     public PagedModel<TagDto> findAllTags(@RequestParam(value = PAGE, defaultValue = "0", required = false) int page,
                                           @RequestParam(value = SIZE, defaultValue = "5", required = false) int size) {
@@ -83,6 +115,15 @@ public class TagController {
         return pagedResourcesAssembler.toModel(tagPage, tagModelAssembler);
     }
 
+    /**
+     * Method for fetching the most popular Tags in the application
+     * Annotated by {@link GetMapping} with parameter value = "/popular".
+     * Accessed by sending request to /api/tags/popular.
+     *
+     * @param page the number of page for pagination
+     * @param size the size of page for pagination
+     * @return Found all Tag entities in the application with HATEOAS pagination support
+     */
     @GetMapping(POPULAR_TAG)
     @ResponseStatus(HttpStatus.OK)
     public PagedModel<TagDto> findTheMostPopularTagsOfUsesOrders(@RequestParam(value = PAGE, defaultValue = "0", required = false) int page,
@@ -92,6 +133,12 @@ public class TagController {
     }
 
     //POST mappings
+    /**
+     * Method for creating Tag
+     *
+     * @param tag Tag to create
+     * @return Created Tag with related action links supported by HATEOAS
+     */
     @PostMapping(consumes = JSON)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Object> createTag(@RequestBody Tag tag) {
@@ -102,6 +149,12 @@ public class TagController {
     }
 
     //DELETE mappings
+    /**
+     * Method for deleting Tag
+     *
+     * @param id ID of Tag to delete
+     * @return Deleted Tag with related action links supported by HATEOAS
+     */
     @RequestMapping(params = REQUEST_ID, method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Object> deleteTag(@RequestParam Long id) {
