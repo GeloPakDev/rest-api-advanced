@@ -1,10 +1,10 @@
 package com.epam.esm;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ColumnName {
-    private ColumnName() {
-
-    }
 
     //For Gift_Certificate Table
     public static final String GIFT_TABLE_NAME = "gift_certificate";
