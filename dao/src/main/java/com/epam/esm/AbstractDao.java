@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,13 +32,21 @@ public abstract class AbstractDao<E, K> {
 
     public Page<E> findAll(Pageable pageable) {
         String entityName = entityType.getSimpleName();
+        //Get List fof entities
         List<E> list = entityManager.createQuery("SELECT e FROM " + entityName + " e", entityType)
                 .setFirstResult((int) pageable.getOffset())
                 .setMaxResults(pageable.getPageSize())
                 .getResultList();
+
+        //Get number of rows of result query
         Long count = (Long) entityManager.createQuery("SELECT COUNT(o) FROM " + entityName + " o")
                 .getSingleResult();
 
+        //Check if user exceed the range of result list
+        if (checkPageableRange(pageable, count)) {
+            String error = "Invalid parameters for pagination with : page (" + pageable.getPageNumber() + ")" + " , size (" + pageable.getPageSize() + ")";
+            throw new InvalidParameterException(error);
+        }
         return new PageImpl<>(list, pageable, count);
     }
 
@@ -64,4 +73,9 @@ public abstract class AbstractDao<E, K> {
         return entity;
     }
 
+    private boolean checkPageableRange(Pageable pageable, long total) {
+        int pageNumber = pageable.getPageNumber();
+        int size = pageable.getPageSize();
+        return (long) pageNumber * size > total;
+    }
 }
