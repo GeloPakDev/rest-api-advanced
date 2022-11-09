@@ -19,17 +19,17 @@ public class TagDaoImpl extends AbstractDao<Tag, Long> implements TagDao {
                     "FROM Order o " +
                     "INNER JOIN o.gifts g " +
                     "INNER JOIN g.tags t " +
-                    "WHERE o.userId IN (SELECT o.userId FROM Order o GROUP BY o.userId ORDER BY SUM(o.price) DESC)" +
+                    "WHERE o.userId IN (SELECT o.userId FROM Order o GROUP BY o.userId ORDER BY SUM(o.price))" +
                     "GROUP BY t.id " +
-                    "ORDER BY COUNT(t.id) DESC";
+                    "ORDER BY COUNT(t.id)";
     public static final String POPULAR_COUNT =
             "SELECT COUNT(t) " +
                     "FROM Order o " +
                     "INNER JOIN o.gifts g " +
                     "INNER JOIN g.tags t " +
-                    "WHERE o.userId IN (SELECT o.userId FROM Order o GROUP BY o.userId ORDER BY SUM(o.price) DESC)" +
+                    "WHERE o.userId IN (SELECT o.userId FROM Order o GROUP BY o.userId ORDER BY SUM(o.price))" +
                     "GROUP BY t.id " +
-                    "ORDER BY COUNT(t.id) DESC";
+                    "ORDER BY COUNT(t.id)";
 
 
     @Autowired
@@ -41,11 +41,13 @@ public class TagDaoImpl extends AbstractDao<Tag, Long> implements TagDao {
     public Page<Tag> findTheMostPopularTagsOfUsesOrders(Pageable pageable) {
         List<Tag> list = entityManager.createQuery(POPULAR, Tag.class)
                 .setFirstResult((int) pageable.getOffset())
-                .setMaxResults(pageable.getPageSize())
+                .setMaxResults(1)
                 .getResultList();
+
         Long count = (Long) entityManager.createQuery(POPULAR_COUNT)
                 .setMaxResults(1)
                 .getSingleResult();
+
         return new PageImpl<>(list, pageable, count);
     }
 }
