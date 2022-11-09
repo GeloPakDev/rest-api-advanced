@@ -1,6 +1,7 @@
 package com.epam.esm.exceptions;
 
 import com.epam.esm.exception.IncorrectParameterException;
+import com.epam.esm.exception.NoResultByFiltersException;
 import com.epam.esm.exception.NoSuchEntityException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.InvalidParameterException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Iterator;
 import java.util.Map;
@@ -47,9 +49,33 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(errorResponse);
     }
 
+    @ExceptionHandler(NoResultByFiltersException.class)
+    public ResponseEntity<Object> handleNoResultByFiltersException() {
+        String message = "No results with applied filters";
+        int statusCode = HttpStatus.NOT_FOUND.value();
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .status(HttpStatus.NOT_FOUND)
+                .statusCode(statusCode)
+                .message(message)
+                .build();
+        return buildResponseEntity(errorResponse);
+    }
+
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public ResponseEntity<Object> handleSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException e) {
         String message = e.getLocalizedMessage();
+        int statusCode = BAD_REQUEST.value();
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .status(BAD_REQUEST)
+                .statusCode(statusCode)
+                .message(message)
+                .build();
+        return buildResponseEntity(errorResponse);
+    }
+
+    @ExceptionHandler(InvalidParameterException.class)
+    public ResponseEntity<Object> handleNullPointerException(InvalidParameterException e) {
+        String message = e.getMessage();
         int statusCode = BAD_REQUEST.value();
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .status(BAD_REQUEST)

@@ -136,8 +136,8 @@ public class GiftCertificateController {
      * @param giftCertificate GiftCertificate object which contains fields to update
      * @return Updated GiftCertificate with related action links supported by HATEOAS
      */
-    @PatchMapping(path = GIFT_CERTIFICATES + ID, consumes = JSON)
-    public ResponseEntity<Object> updateGiftCertificate(@PathVariable(REQUEST_ID) Long id, @RequestBody GiftCertificate giftCertificate) {
+    @RequestMapping(path = GIFT_CERTIFICATES, params = REQUEST_ID, consumes = JSON, method = RequestMethod.PATCH)
+    public ResponseEntity<Object> updateGiftCertificate(@RequestParam Long id, @RequestBody GiftCertificate giftCertificate) {
         GiftCertificate gift = giftCertificateService.update(id, giftCertificate);
         GiftCertificateDto giftCertificateDto = dtoConverter.convertToDto(gift);
         hateoasAdder.addLinks(giftCertificateDto);

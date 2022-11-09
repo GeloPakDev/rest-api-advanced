@@ -3,6 +3,7 @@ package com.epam.esm.service.impl;
 import com.epam.esm.GiftCertificate;
 import com.epam.esm.exception.ExceptionResult;
 import com.epam.esm.exception.IncorrectParameterException;
+import com.epam.esm.exception.NoResultByFiltersException;
 import com.epam.esm.impl.GiftCertificateDaoImpl;
 import com.epam.esm.service.GiftCertificateService;
 import com.epam.esm.validator.GiftValidator;
@@ -42,7 +43,11 @@ public class GiftCertificateImpl implements GiftCertificateService {
     @Override
     public Page<GiftCertificate> doFilter(MultiValueMap<String, String> requestParams, int page, int size) {
         Pageable pageRequest = PageRequest.of(page, size);
-        return giftCertificateDao.findWithFilters(requestParams, pageRequest);
+        Page<GiftCertificate> list = giftCertificateDao.findWithFilters(requestParams, pageRequest);
+        if (list.getTotalElements() == 0) {
+            throw new NoResultByFiltersException();
+        }
+        return list;
     }
 
     //CREATE operations
@@ -79,10 +84,13 @@ public class GiftCertificateImpl implements GiftCertificateService {
         //Get gift to update by ID
         Optional<GiftCertificate> certificate = giftCertificateDao.findById(id);
         //Extract Gift from Wrapper
-        GiftCertificate gift = new GiftCertificate();
+        GiftCertificate gift;
         if (certificate.isPresent()) {
             gift = certificate.get();
+        } else {
+            throw new NoSuchElementException();
         }
+
         //Validate gift for update
         GiftValidator.validateForUpdate(giftCertificate, exceptionResult);
         if (!exceptionResult.getExceptionMessages().isEmpty()) {

@@ -38,6 +38,7 @@ public class GiftCertificateDaoImpl extends AbstractDao<GiftCertificate, Long> i
                 .setFirstResult((int) pageable.getOffset())
                 .setMaxResults(pageable.getPageSize())
                 .getResultList();
+
         int count = entityManager.createQuery(criteriaQuery).getResultList().size();
         return new PageImpl<>(list, pageable, count);
     }
