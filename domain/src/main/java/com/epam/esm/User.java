@@ -13,12 +13,12 @@ import java.util.Set;
 
 import static com.epam.esm.ColumnName.*;
 
-@Entity
-@Table(name = USER_TABLE_NAME)
-@Getter
+@Entity@Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = USER_TABLE_NAME)
+
 @EntityListeners(AuditingEntityListener.class)
 public class User {
     @Id
@@ -31,5 +31,5 @@ public class User {
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     @JoinColumn(name = ORDER_USER_ID)
-    Set<Order> orders;
+    private Set<Order> orders;
 }
