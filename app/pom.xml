@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>war</packaging>
-<!--    <packaging>jar</packaging>-->
     <artifactId>app</artifactId>
 
     <dependencies>
@@ -34,11 +33,13 @@
             <version>1.0.0</version>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.7.3</version>
                 <executions>
                     <execution>
                         <goals>
@@ -46,7 +47,14 @@
                         </goals>
                     </execution>
                 </executions>
-                <version>2.7.5</version>
+                <configuration>
+                    <mainClass>com.epam.esm.Application</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.1</version>
             </plugin>
         </plugins>
     </build>
