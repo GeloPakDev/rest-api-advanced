@@ -11,11 +11,11 @@ import static com.epam.esm.exception.ExceptionIncorrectParameterMessageCodes.*;
 
 @UtilityClass
 public class GiftValidator extends EntityValidator {
-    private final int MAX_LENGTH_NAME = 45;
-    private final int MIN_LENGTH_NAME = 3;
-    private final int MAX_LENGTH_DESCRIPTION = 300;
-    private final int MAX_DURATION = 366;
-    private final int MIN_DURATION = 1;
+    private static final int MAX_LENGTH_NAME = 45;
+    private static final int MIN_LENGTH_NAME = 3;
+    private static final int MAX_LENGTH_DESCRIPTION = 300;
+    private static final int MAX_DURATION = 366;
+    private static final int MIN_DURATION = 1;
 
     public void validate(GiftCertificate giftCertificate, ExceptionResult er) {
         validateName(giftCertificate.getName(), er);

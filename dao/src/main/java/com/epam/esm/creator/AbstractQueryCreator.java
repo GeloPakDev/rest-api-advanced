@@ -15,7 +15,7 @@ import static com.epam.esm.creator.util.FilterParameters.*;
 
 
 public abstract class AbstractQueryCreator<T> implements QueryCreator<T> {
-    private final String PERCENT = "%";
+    private static final String PERCENT = "%";
     private static final String DESCRIPTION = "description";
     private static final String CREATE_DATE = "createDate";
 

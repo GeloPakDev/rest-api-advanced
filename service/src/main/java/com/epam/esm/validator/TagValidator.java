@@ -8,8 +8,8 @@ import static com.epam.esm.exception.ExceptionIncorrectParameterMessageCodes.BAD
 
 @UtilityClass
 public class TagValidator extends EntityValidator {
-    private final int MAX_LENGTH_NAME = 20;
-    private final int MIN_LENGTH_NAME = 3;
+    private static final int MAX_LENGTH_NAME = 20;
+    private static final int MIN_LENGTH_NAME = 3;
 
 
     public void validate(Tag tag, ExceptionResult er) {
