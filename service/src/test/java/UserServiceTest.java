@@ -40,7 +40,7 @@ public class UserServiceTest {
                     3, LocalDateTime.parse("2019-07-29T06:12:15"), LocalDateTime.parse("2019-08-29T06:12:15"), null)).collect(Collectors.toSet()));
     private static final Order ORDER_3 = new Order(3L, 304, 2L, UPDATED_DATE,
             Stream.of(new GiftCertificate(3L, "giftCertificate3", "description3", 30.1,
-                    3, LocalDateTime.parse("2019-02-29T06:12:15"), LocalDateTime.parse("2019-04-29T06:12:15"), null)).collect(Collectors.toSet()));
+                    3, LocalDateTime.parse("2019-03-29T06:12:15"), LocalDateTime.parse("2019-04-29T06:12:15"), null)).collect(Collectors.toSet()));
     private static final User USER_1 = new User(1L, "name1", Stream.of(ORDER_1).collect(Collectors.toSet()));
     private static final User USER_2 = new User(2L, "name2", Stream.of(ORDER_2).collect(Collectors.toSet()));
     private static final User USER_3 = new User(3L, "name3", Stream.of(ORDER_3).collect(Collectors.toSet()));
