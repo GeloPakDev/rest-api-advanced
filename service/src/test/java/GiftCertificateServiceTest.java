@@ -33,17 +33,17 @@ public class GiftCertificateServiceTest {
 
     @InjectMocks
     private GiftCertificateImpl giftCertificateService;
-
-    private static final Tag TAG_2 = new Tag(2L, "tagNameThree");
+    private static final String TAG_NAME = "tagNameThree";
+    private static final Tag TAG_2 = new Tag(2L, TAG_NAME);
 
     private static final GiftCertificate GIFT_CERTIFICATE_1 = new GiftCertificate(1L, "giftCertificateOne",
             "descriptionOne", 10.1, 1, LocalDateTime.parse("2020-08-29T06:12:15.156"),
             LocalDateTime.parse("2020-08-29T06:12:15.156"), Stream.of(new Tag(1L, "tagNameOne"),
-            new Tag(2L, "tagNameThree"), new Tag(3L, "tagNameFive")).collect(Collectors.toSet()));
+            new Tag(2L, TAG_NAME), new Tag(3L, "tagNameFive")).collect(Collectors.toSet()));
 
     private static final GiftCertificate GIFT_CERTIFICATE_2 = new GiftCertificate(2L, "giftCertificateTwo",
             "descriptionTwo", 30.3, 3, LocalDateTime.parse("2019-08-29T06:12:15.156"),
-            LocalDateTime.parse("2019-08-29T06:12:15.156"), Stream.of(new Tag(2L, "tagNameThree")).collect(Collectors.toSet()));
+            LocalDateTime.parse("2019-08-29T06:12:15.156"), Stream.of(new Tag(2L, TAG_NAME)).collect(Collectors.toSet()));
 
     private static final GiftCertificate GIFT_CERTIFICATE_3 = new GiftCertificate(3L, "giftCertificateThree",
             "descriptionThree", 20.2, 2, LocalDateTime.parse("2018-08-29T06:12:15.156"),

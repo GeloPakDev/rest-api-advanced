@@ -14,16 +14,17 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GiftValidatorTest {
+    public static final String DATE = "2020-08-29T06:12:15.156";
     private static final Set<Tag> INCORRECT_TAGS = Stream.of(new Tag(1L, "1"), new Tag(2L, "2")).collect(Collectors.toSet());
     private static final Set<Tag> CORRECT_TAGS = Stream.of(new Tag(1L, "yellow"), new Tag(2L, "blue")).collect(Collectors.toSet());
 
     private static final GiftCertificate INCORRECT_GIFT_CERTIFICATE = new GiftCertificate(1L, " ",
-            " ", 10.115, 1, LocalDateTime.parse("2020-08-29T06:12:15.156"),
-            LocalDateTime.parse("2020-08-29T06:12:15.156"), INCORRECT_TAGS);
+            " ", 10.115, 1, LocalDateTime.parse(DATE),
+            LocalDateTime.parse(DATE), INCORRECT_TAGS);
 
     private static final GiftCertificate CORRECT_GIFT_CERTIFICATE = new GiftCertificate(23L, "giftCertificate",
-            "description", 10.1, 12, LocalDateTime.parse("2020-08-29T06:12:15.156"),
-            LocalDateTime.parse("2020-08-29T06:12:15.156"), CORRECT_TAGS);
+            "description", 10.1, 12, LocalDateTime.parse(DATE),
+            LocalDateTime.parse(DATE), CORRECT_TAGS);
 
 
     @Test
