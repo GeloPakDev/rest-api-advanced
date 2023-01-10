@@ -1,9 +1,7 @@
 package com.epam.esm.validator;
 
-public abstract class EntityValidator {
-
-
-    public static boolean isNotString(String name) {
+public interface EntityValidator {
+     static boolean isNotString(String name) {
         if (name.isEmpty()) {
             return true;
         }

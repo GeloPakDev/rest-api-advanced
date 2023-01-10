@@ -21,7 +21,7 @@ public abstract class AbstractDao<E, K> {
     protected EntityManager entityManager;
     protected final Class<E> entityType;
 
-    public AbstractDao(Class<E> entityType) {
+    protected AbstractDao(Class<E> entityType) {
         this.entityType = entityType;
     }
 

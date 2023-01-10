@@ -7,10 +7,14 @@ import lombok.experimental.UtilityClass;
 
 import java.util.Set;
 
-import static com.epam.esm.exception.ExceptionIncorrectParameterMessageCodes.*;
+import static com.epam.esm.exception.ExceptionIncorrectParameterMessageCodes.BAD_GIFT_CERTIFICATE_DESCRIPTION;
+import static com.epam.esm.exception.ExceptionIncorrectParameterMessageCodes.BAD_GIFT_CERTIFICATE_DURATION;
+import static com.epam.esm.exception.ExceptionIncorrectParameterMessageCodes.BAD_GIFT_CERTIFICATE_NAME;
+import static com.epam.esm.exception.ExceptionIncorrectParameterMessageCodes.BAD_GIFT_CERTIFICATE_PRICE;
+import static com.epam.esm.validator.EntityValidator.isNotString;
 
 @UtilityClass
-public class GiftValidator extends EntityValidator {
+public class GiftValidator {
     private static final int MAX_LENGTH_NAME = 45;
     private static final int MIN_LENGTH_NAME = 3;
     private static final int MAX_LENGTH_DESCRIPTION = 300;
