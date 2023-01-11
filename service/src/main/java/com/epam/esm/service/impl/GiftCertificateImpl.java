@@ -102,6 +102,54 @@ public class GiftCertificateImpl implements GiftCertificateService {
         return giftCertificateDao.update(updatedGift);
     }
 
+    @Override
+    public GiftCertificate updateOne(Long id, GiftCertificate giftCertificate) {
+        ExceptionResult exceptionResult = new ExceptionResult();
+        //Get gift to update by ID
+        Optional<GiftCertificate> certificate = giftCertificateDao.findById(id);
+        //Extract Gift from Wrapper
+        GiftCertificate gift;
+        if (certificate.isPresent()) {
+            gift = certificate.get();
+        } else {
+            throw new NoSuchElementException();
+        }
+
+        //Validate gift for update
+        GiftValidator.validateForUpdate(giftCertificate, exceptionResult);
+        if (!exceptionResult.getExceptionMessages().isEmpty()) {
+            throw new IncorrectParameterException(exceptionResult);
+        }
+        //Get Updated giftCertificate
+        GiftCertificate updatedGift = updateGiftCertificate(giftCertificate, gift);
+        //Update GiftCertificate
+        return giftCertificateDao.update(updatedGift);
+    }
+
+    @Override
+    public GiftCertificate updateTwo(Long id, GiftCertificate giftCertificate) {
+        ExceptionResult exceptionResult = new ExceptionResult();
+        //Get gift to update by ID
+        Optional<GiftCertificate> certificate = giftCertificateDao.findById(id);
+        //Extract Gift from Wrapper
+        GiftCertificate gift;
+        if (certificate.isPresent()) {
+            gift = certificate.get();
+        } else {
+            throw new NoSuchElementException();
+        }
+
+        //Validate gift for update
+        GiftValidator.validateForUpdate(giftCertificate, exceptionResult);
+        if (!exceptionResult.getExceptionMessages().isEmpty()) {
+            throw new IncorrectParameterException(exceptionResult);
+        }
+        //Get Updated giftCertificate
+        GiftCertificate updatedGift = updateGiftCertificate(giftCertificate, gift);
+        //Update GiftCertificate
+        return giftCertificateDao.update(updatedGift);
+    }
+
     private GiftCertificate updateGiftCertificate(GiftCertificate giftForUpdate, GiftCertificate initialGift) {
         String name = giftForUpdate.getName();
         if (!Objects.isNull(name)) {
