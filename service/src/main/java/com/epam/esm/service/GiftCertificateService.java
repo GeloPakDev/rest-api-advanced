@@ -20,9 +20,5 @@ public interface GiftCertificateService {
 
     GiftCertificate update(Long id, GiftCertificate giftCertificate);
 
-    GiftCertificate updateOne(Long id, GiftCertificate giftCertificate);
-
-    GiftCertificate updateTwo(Long id, GiftCertificate giftCertificate);
-
     Page<GiftCertificate> doFilter(MultiValueMap<String, String> requestParams, int page, int size);
 }
